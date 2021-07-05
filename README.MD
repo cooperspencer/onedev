@@ -3,7 +3,7 @@ Get:
 ```go get github.com/cooperspencer/onedev```
 
 What is done:
-- [X]Project
+- [X] Project
 - [ ] Issue
 - [ ] Issue Vote
 - [ ] Issue Watch

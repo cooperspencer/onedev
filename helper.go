@@ -25,8 +25,6 @@ func (c Client) get(url string) (io.ReadCloser, error) {
 		return nil, err
 	}
 
-	defer resp.Body.Close()
-
 	return resp.Body, err
 }
 
@@ -41,8 +39,6 @@ func (c Client) delete(url string) (io.ReadCloser, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	defer resp.Body.Close()
 
 	return resp.Body, err
 }
@@ -59,8 +55,6 @@ func (c Client) post(url string, payload io.Reader) (io.ReadCloser, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	defer resp.Body.Close()
 
 	return resp.Body, err
 }

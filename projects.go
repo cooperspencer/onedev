@@ -16,6 +16,7 @@ func (c Client) GetProject(id int) (Project, error) {
 
 	project := Project{}
 	err = json.NewDecoder(body).Decode(&project)
+	body.Close()
 
 	return project, err
 }
@@ -33,6 +34,7 @@ func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
 
 	id := 0
 	err = json.NewDecoder(body).Decode(&id)
+	body.Close()
 
 	return id, err
 }
@@ -57,6 +59,7 @@ func (c Client) GetProjects(options *ProjectQueryOptions) (Project, error) {
 
 	project := Project{}
 	err = json.NewDecoder(body).Decode(&project)
+	body.Close()
 
 	return project, err
 }
@@ -69,6 +72,7 @@ func (c Client) GetProjectForks(id int) ([]Project, error) {
 
 	forks := []Project{}
 	err = json.NewDecoder(body).Decode(&forks)
+	body.Close()
 
 	return forks, err
 }
@@ -81,6 +85,7 @@ func (c Client) GetProjectSettings(id int) (ProjectSettings, error) {
 
 	projectsettings := ProjectSettings{}
 	err = json.NewDecoder(body).Decode(&projectsettings)
+	body.Close()
 
 	return projectsettings, err
 }
@@ -93,6 +98,7 @@ func (c Client) GetGroupAuthorizations(id int) ([]GroupAuthorization, error) {
 
 	groupauthorizations := []GroupAuthorization{}
 	err = json.NewDecoder(body).Decode(&groupauthorizations)
+	body.Close()
 
 	return groupauthorizations, err
 }
@@ -105,6 +111,7 @@ func (c Client) GetUserAuthorizations(id int) ([]UserAuthorization, error) {
 
 	userauthorizations := []UserAuthorization{}
 	err = json.NewDecoder(body).Decode(&userauthorizations)
+	body.Close()
 
 	return userauthorizations, err
 }
@@ -137,6 +144,7 @@ func (c Client) GetMilestones(id int, options *MilestoneQueryOptions) ([]Milesto
 
 	milestones := []Milestone{}
 	err = json.NewDecoder(body).Decode(&milestones)
+	body.Close()
 
 	return milestones, err
 }
@@ -167,6 +175,7 @@ func (c Client) GetTopContributors(id int, options *ContributorOptions) ([]Contr
 
 	contributions := []Contribution{}
 	err = json.NewDecoder(body).Decode(&contributions)
+	body.Close()
 
 	return contributions, err
 }

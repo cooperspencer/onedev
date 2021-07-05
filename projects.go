@@ -52,7 +52,9 @@ func (c Client) GetProjects(options *ProjectQueryOptions) (Project, error) {
 	}
 	q.Add("count", fmt.Sprintf("%d", options.Count))
 
-	body, err := c.get(q.Encode())
+	req.URL.RawQuery = q.Encode()
+
+	body, err := c.get(req.URL.String())
 	if err != nil {
 		return Project{}, err
 	}
@@ -137,7 +139,9 @@ func (c Client) GetMilestones(id int, options *MilestoneQueryOptions) ([]Milesto
 	}
 	q.Add("count", fmt.Sprintf("%d", options.Count))
 
-	body, err := c.get(q.Encode())
+	req.URL.RawQuery = q.Encode()
+
+	body, err := c.get(req.URL.String())
 	if err != nil {
 		return []Milestone{}, err
 	}
@@ -168,7 +172,9 @@ func (c Client) GetTopContributors(id int, options *ContributorOptions) ([]Contr
 	}
 	q.Add("count", fmt.Sprintf("%d", options.Count))
 
-	body, err := c.get(q.Encode())
+	req.URL.RawQuery = q.Encode()
+
+	body, err := c.get(req.URL.String())
 	if err != nil {
 		return []Contribution{}, err
 	}

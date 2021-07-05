@@ -39,7 +39,7 @@ func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
 	return id, err
 }
 
-func (c Client) GetProjects(options *ProjectQueryOptions) (Project, error) {
+func (c Client) GetProjects(options *ProjectQueryOptions) ([]Project, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/api/projects", c.Url), nil)
 
 	q := req.URL.Query()
@@ -56,14 +56,14 @@ func (c Client) GetProjects(options *ProjectQueryOptions) (Project, error) {
 
 	body, err := c.get(req.URL.String())
 	if err != nil {
-		return Project{}, err
+		return []Project{}, err
 	}
 
-	project := Project{}
-	err = json.NewDecoder(body).Decode(&project)
+	projects := []Project{}
+	err = json.NewDecoder(body).Decode(&projects)
 	body.Close()
 
-	return project, err
+	return projects, err
 }
 
 func (c Client) GetProjectForks(id int) ([]Project, error) {

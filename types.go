@@ -140,6 +140,12 @@ type ProjectQueryOptions struct {
 	Count  int
 }
 
+type IssueQueryOptions struct {
+	Query  string
+	Offset int
+	Count  int
+}
+
 type MilestoneQueryOptions struct {
 	Name      string
 	DueBefore time.Time
@@ -177,4 +183,137 @@ type CreateProjectOptions struct {
 	Description            string `json:"description"`
 	DefaultRoleID          int    `json:"defaultRoleId"`
 	IssueManagementEnabled bool   `json:"issueManagementEnabled"`
+}
+
+type Issue struct {
+	ID            int       `json:"id"`
+	State         string    `json:"state"`
+	Title         string    `json:"title"`
+	Description   string    `json:"description"`
+	NumberScopeID int       `json:"numberScopeId"`
+	ProjectID     int       `json:"projectId"`
+	MilestoneID   int       `json:"milestoneId"`
+	SubmitterID   int       `json:"submitterId"`
+	SubmitterName string    `json:"submitterName"`
+	SubmitDate    time.Time `json:"submitDate"`
+	VoteCount     int       `json:"voteCount"`
+	CommentCount  int       `json:"commentCount"`
+	UUID          string    `json:"uuid"`
+	Number        int       `json:"number"`
+	LastUpdate    struct {
+		UserID   int       `json:"userId"`
+		UserName string    `json:"userName"`
+		Date     time.Time `json:"date"`
+		Activity string    `json:"activity"`
+	} `json:"lastUpdate"`
+}
+
+type IssueField struct {
+	ID      int    `json:"id"`
+	IssueID int    `json:"issueId"`
+	Name    string `json:"name"`
+	Value   string `json:"value"`
+	Type    string `json:"type"`
+	Ordinal int    `json:"ordinal"`
+}
+
+type IssueChange struct {
+	ID       int       `json:"id"`
+	IssueID  int       `json:"issueId"`
+	UserID   int       `json:"userId"`
+	UserName string    `json:"userName"`
+	Date     time.Time `json:"date"`
+	Data     struct {
+		Type         string `json:"@type"`
+		OldState     string `json:"oldState"`
+		NewState     string `json:"newState"`
+		OldMilestone string `json:"oldMilestone"`
+		NewMilestone string `json:"newMilestone"`
+		Comment      string `json:"comment"`
+		OldFields    struct {
+			String struct {
+				Name   string   `json:"name"`
+				Type   string   `json:"type"`
+				Values []string `json:"values"`
+			} `json:"string"`
+		} `json:"oldFields"`
+		NewFields struct {
+			String struct {
+				Name   string   `json:"name"`
+				Type   string   `json:"type"`
+				Values []string `json:"values"`
+			} `json:"string"`
+		} `json:"newFields"`
+	} `json:"data"`
+}
+
+type Comment struct {
+	ID       int       `json:"id"`
+	IssueID  int       `json:"issueId"`
+	UserID   int       `json:"userId"`
+	UserName string    `json:"userName"`
+	Date     time.Time `json:"date"`
+	Content  string    `json:"content"`
+}
+
+type Vote struct {
+	ID      int       `json:"id"`
+	IssueID int       `json:"issueId"`
+	UserID  int       `json:"userId"`
+	Date    time.Time `json:"date"`
+}
+
+type Watch struct {
+	ID       int  `json:"id"`
+	IssueID  int  `json:"issueId"`
+	UserID   int  `json:"userId"`
+	Watching bool `json:"watching"`
+}
+
+type PullRequest struct {
+	ID        int    `json:"id"`
+	Title     string `json:"title"`
+	CloseInfo struct {
+		UserID   int       `json:"userId"`
+		UserName string    `json:"userName"`
+		Date     time.Time `json:"date"`
+		Status   string    `json:"status"`
+	} `json:"closeInfo"`
+	Description                 string    `json:"description"`
+	SubmitterID                 int       `json:"submitterId"`
+	SubmitterName               string    `json:"submitterName"`
+	NumberScopeID               int       `json:"numberScopeId"`
+	TargetProjectID             int       `json:"targetProjectId"`
+	TargetBranch                string    `json:"targetBranch"`
+	SourceProjectID             int       `json:"sourceProjectId"`
+	SourceBranch                string    `json:"sourceBranch"`
+	BaseCommitHash              string    `json:"baseCommitHash"`
+	LastCodeCommentActivityDate time.Time `json:"lastCodeCommentActivityDate"`
+	SubmitDate                  time.Time `json:"submitDate"`
+	MergeStrategy               string    `json:"mergeStrategy"`
+	UUID                        string    `json:"uuid"`
+	Number                      int       `json:"number"`
+	CommentCount                int       `json:"commentCount"`
+	LastUpdate                  struct {
+		UserID   int       `json:"userId"`
+		UserName string    `json:"userName"`
+		Date     time.Time `json:"date"`
+		Activity string    `json:"activity"`
+	} `json:"lastUpdate"`
+	CheckError string `json:"checkError"`
+}
+
+type CreateIssueOptions struct {
+	ProjectID   int               `json:"projectId"`
+	Title       string            `json:"title"`
+	Description string            `json:"description"`
+	MilestoneID int               `json:"milestoneId"`
+	Fields      map[string]string `json:"fields"`
+}
+
+type StateTransitionOptions struct {
+	State        string            `json:"state"`
+	Fields       map[string]string `json:"fields"`
+	RemoveFields []string          `json:"removeFields"`
+	Comment      string            `json:"comment"`
 }

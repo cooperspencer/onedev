@@ -4,7 +4,7 @@ Get:
 
 What is done:
 - [X] Project
-- [ ] Issue
+- [X] Issue
 - [ ] Issue Vote
 - [ ] Issue Watch
 - [ ] Issue Comment

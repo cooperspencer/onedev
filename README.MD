@@ -5,7 +5,7 @@ Get:
 What is done:
 - [X] Project
 - [X] Issue
-- [ ] Issue Vote
+- [X] Issue Vote
 - [ ] Issue Watch
 - [ ] Issue Comment
 - [ ] Milestone

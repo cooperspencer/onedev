@@ -317,3 +317,10 @@ type StateTransitionOptions struct {
 	RemoveFields []string          `json:"removeFields"`
 	Comment      string            `json:"comment"`
 }
+
+type IssueVote struct {
+	ID      int       `json:"id"`
+	IssueID int       `json:"issueId"`
+	UserID  int       `json:"userId"`
+	Date    time.Time `json:"date"`
+}

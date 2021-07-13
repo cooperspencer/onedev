@@ -324,3 +324,10 @@ type IssueVote struct {
 	UserID  int       `json:"userId"`
 	Date    time.Time `json:"date"`
 }
+
+type IssueWatch struct {
+	ID       int  `json:"id"`
+	IssueID  int  `json:"issueId"`
+	UserID   int  `json:"userId"`
+	Watching bool `json:"watching"`
+}

@@ -6,7 +6,7 @@ What is done:
 - [X] Project
 - [X] Issue
 - [X] Issue Vote
-- [ ] Issue Watch
+- [X] Issue Watch
 - [ ] Issue Comment
 - [ ] Milestone
 - [ ] Pull Request

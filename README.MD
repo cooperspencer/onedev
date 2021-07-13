@@ -7,7 +7,7 @@ What is done:
 - [X] Issue
 - [X] Issue Vote
 - [X] Issue Watch
-- [ ] Issue Comment
+- [X] Issue Comment
 - [ ] Milestone
 - [ ] Pull Request
 - [ ] Pull Request Assignment

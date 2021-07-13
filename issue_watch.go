@@ -6,20 +6,20 @@ import (
 	"fmt"
 )
 
-func (c Client) GetIssueWatch(id int) (IssueWatch, error) {
+func (c Client) GetIssueWatch(id int) (Watch, error) {
 	body, err := c.get(fmt.Sprintf("%s/api/issue-watches/%d", c.Url, id))
 	if err != nil {
-		return IssueWatch{}, err
+		return Watch{}, err
 	}
 
-	watch := IssueWatch{}
+	watch := Watch{}
 	err = json.NewDecoder(body).Decode(&watch)
 	body.Close()
 
 	return watch, err
 }
 
-func (c Client) PostIssueWatch(options IssueWatch) (int, error) {
+func (c Client) PostIssueWatch(options Watch) (int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, err

@@ -6,20 +6,20 @@ import (
 	"fmt"
 )
 
-func (c Client) GetIssueVote(id int) (IssueVote, error) {
+func (c Client) GetIssueVote(id int) (Vote, error) {
 	body, err := c.get(fmt.Sprintf("%s/api/issue-votes/%d", c.Url, id))
 	if err != nil {
-		return IssueVote{}, err
+		return Vote{}, err
 	}
 
-	vote := IssueVote{}
+	vote := Vote{}
 	err = json.NewDecoder(body).Decode(&vote)
 	body.Close()
 
 	return vote, err
 }
 
-func (c Client) PostIssueVote(options IssueVote) (int, error) {
+func (c Client) PostIssueVote(options Vote) (int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, err

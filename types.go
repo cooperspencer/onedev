@@ -317,3 +317,84 @@ type StateTransitionOptions struct {
 	RemoveFields []string          `json:"removeFields"`
 	Comment      string            `json:"comment"`
 }
+
+type MergePreview struct {
+	TargetHeadCommitHash string `json:"targetHeadCommitHash"`
+	HeadCommitHash       string `json:"headCommitHash"`
+	MergeStrategy        string `json:"mergeStrategy"`
+	MergeCommitHash      string `json:"mergeCommitHash"`
+}
+
+type Assignment struct {
+	ID        int `json:"id"`
+	UserID    int `json:"userId"`
+	RequestID int `json:"requestId"`
+}
+
+type Review struct {
+	ID        int `json:"id"`
+	UserID    int `json:"userId"`
+	RequestID int `json:"requestId"`
+	Result    struct {
+		Commit   string `json:"commit"`
+		Approved bool   `json:"approved"`
+		Comment  string `json:"comment"`
+	} `json:"result"`
+}
+
+type Update struct {
+	ID                   int       `json:"id"`
+	RequestID            int       `json:"requestId"`
+	HeadCommitHash       string    `json:"headCommitHash"`
+	TargetHeadCommitHash string    `json:"targetHeadCommitHash"`
+	Date                 time.Time `json:"date"`
+}
+
+type Build struct {
+	ID            int       `json:"id"`
+	NumberScopeID int       `json:"numberScopeId"`
+	ProjectID     int       `json:"projectId"`
+	SubmitterID   int       `json:"submitterId"`
+	SubmitterName string    `json:"submitterName"`
+	CancellerID   int       `json:"cancellerId"`
+	CancellerName string    `json:"cancellerName"`
+	JobName       string    `json:"jobName"`
+	JobWorkspace  string    `json:"jobWorkspace"`
+	RefName       string    `json:"refName"`
+	Version       string    `json:"version"`
+	Number        int       `json:"number"`
+	CommitHash    string    `json:"commitHash"`
+	Status        string    `json:"status"`
+	SubmitDate    time.Time `json:"submitDate"`
+	PendingDate   time.Time `json:"pendingDate"`
+	RunningDate   time.Time `json:"runningDate"`
+	FinishDate    time.Time `json:"finishDate"`
+	RetryDate     time.Time `json:"retryDate"`
+	SubmitReason  string    `json:"submitReason"`
+	ErrorMessage  string    `json:"errorMessage"`
+	RequestID     int       `json:"requestId"`
+}
+
+type Change struct {
+	ID        int       `json:"id"`
+	RequestID int       `json:"requestId"`
+	UserID    int       `json:"userId"`
+	UserName  string    `json:"userName"`
+	Date      time.Time `json:"date"`
+	Data      struct {
+		Type    string `json:"@type"`
+		Comment string `json:"comment"`
+	} `json:"data"`
+}
+
+type PullRequestOptions struct {
+	TargetProjectID int    `json:"targetProjectId"`
+	SourceProjectID int    `json:"sourceProjectId"`
+	TargetBranch    string `json:"targetBranch"`
+	SourceBranch    string `json:"sourceBranch"`
+	Title           string `json:"title"`
+	Description     string `json:"description"`
+	MergeStrategy   string `json:"mergeStrategy"`
+	ReviewerIds     []int  `json:"reviewerIds"`
+	AssigneeIds     []int  `json:"assigneeIds"`
+}

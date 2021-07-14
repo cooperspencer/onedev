@@ -9,7 +9,7 @@ What is done:
 - [X] Issue Watch
 - [X] Issue Comment
 - [X] Milestone
-- [ ] Pull Request
+- [X] Pull Request
 - [ ] Pull Request Assignment
 - [ ] Pull Request Comment
 - [ ] Pull Request Review

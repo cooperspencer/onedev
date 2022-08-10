@@ -206,3 +206,16 @@ func (c Client) DeleteProject(id int) error {
 	}
 	return nil
 }
+
+func (c Client) GetCloneUrl(id int) (CloneUrl, error) {
+	body, err := c.get(fmt.Sprintf("%s/api/projects/%d/clone-url", c.Url, id))
+	if err != nil {
+		return CloneUrl{}, err
+	}
+
+	cloneurls := CloneUrl{}
+	err = json.NewDecoder(body).Decode(&cloneurls)
+	body.Close()
+
+	return cloneurls, err
+}

@@ -398,3 +398,8 @@ type PullRequestOptions struct {
 	ReviewerIds     []int  `json:"reviewerIds"`
 	AssigneeIds     []int  `json:"assigneeIds"`
 }
+
+type CloneUrl struct {
+	HTTP string `json:"http"`
+	SSH  string `json:"ssh"`
+}

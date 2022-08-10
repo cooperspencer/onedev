@@ -403,3 +403,9 @@ type CloneUrl struct {
 	HTTP string `json:"http"`
 	SSH  string `json:"ssh"`
 }
+
+type User struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	FullName string `json:"fullName"`
+}

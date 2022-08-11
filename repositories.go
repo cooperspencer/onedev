@@ -1,8 +1,8 @@
 package onedev
 
 import (
-	"encoding/json"
 	"fmt"
+	"io"
 )
 
 func (c Client) GetDefaultBranch(id int) (string, error) {
@@ -11,9 +11,8 @@ func (c Client) GetDefaultBranch(id int) (string, error) {
 		return "", err
 	}
 
-	defaultbranch := ""
-	err = json.NewDecoder(body).Decode(&defaultbranch)
+	defaultbranch, err := io.ReadAll(body)
 	body.Close()
 
-	return defaultbranch, err
+	return string(defaultbranch), err
 }

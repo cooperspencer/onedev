@@ -409,3 +409,18 @@ type User struct {
 	Name     string `json:"name"`
 	FullName string `json:"fullName"`
 }
+
+type UserMemebership struct {
+	ID      int `json:"id"`
+	UserID  int `json:"userId"`
+	GroupID int `json:"groupId"`
+}
+
+type Group struct {
+	ID                 int         `json:"id"`
+	Name               string      `json:"name"`
+	Description        interface{} `json:"description"`
+	Administrator      bool        `json:"administrator"`
+	CreateRootProjects bool        `json:"createRootProjects"`
+	Enforce2FA         bool        `json:"enforce2FA"`
+}

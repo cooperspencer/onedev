@@ -6,7 +6,7 @@ import (
 )
 
 func (c Client) GetMe() (User, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/users/me", c.Url))
+	body, err := c.get(fmt.Sprintf("%s/~api/users/me", c.Url))
 	if err != nil {
 		return User{}, err
 	}
@@ -19,7 +19,7 @@ func (c Client) GetMe() (User, error) {
 }
 
 func (c Client) GetUserMemberships(id int) ([]UserMemebership, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/users/%d/memberships", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/users/%d/memberships", c.Url, id))
 	if err != nil {
 		return []UserMemebership{}, err
 	}

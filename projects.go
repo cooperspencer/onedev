@@ -9,7 +9,7 @@ import (
 )
 
 func (c Client) GetProject(id int) (Project, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/projects/%d", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d", c.Url, id))
 	if err != nil {
 		return Project{}, err
 	}
@@ -27,7 +27,7 @@ func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
 		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/projects", c.Url), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/projects", c.Url), payload)
 	if err != nil {
 		return 0, err
 	}
@@ -40,7 +40,7 @@ func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
 }
 
 func (c Client) GetProjects(options *ProjectQueryOptions) ([]Project, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/api/projects", c.Url), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/projects", c.Url), nil)
 
 	q := req.URL.Query()
 	if options.Query != "" {
@@ -67,7 +67,7 @@ func (c Client) GetProjects(options *ProjectQueryOptions) ([]Project, error) {
 }
 
 func (c Client) GetProjectForks(id int) ([]Project, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/projects/%d/forks", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/forks", c.Url, id))
 	if err != nil {
 		return []Project{}, err
 	}
@@ -80,7 +80,7 @@ func (c Client) GetProjectForks(id int) ([]Project, error) {
 }
 
 func (c Client) GetProjectSettings(id int) (ProjectSettings, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/projects/%d/setting", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/setting", c.Url, id))
 	if err != nil {
 		return ProjectSettings{}, err
 	}
@@ -93,7 +93,7 @@ func (c Client) GetProjectSettings(id int) (ProjectSettings, error) {
 }
 
 func (c Client) GetGroupAuthorizations(id int) ([]GroupAuthorization, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/projects/%d/group-authorizations", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/group-authorizations", c.Url, id))
 	if err != nil {
 		return []GroupAuthorization{}, err
 	}
@@ -106,7 +106,7 @@ func (c Client) GetGroupAuthorizations(id int) ([]GroupAuthorization, error) {
 }
 
 func (c Client) GetUserAuthorizations(id int) ([]UserAuthorization, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/projects/%d/user-authorizations", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/user-authorizations", c.Url, id))
 	if err != nil {
 		return []UserAuthorization{}, err
 	}
@@ -119,7 +119,7 @@ func (c Client) GetUserAuthorizations(id int) ([]UserAuthorization, error) {
 }
 
 func (c Client) GetMilestones(id int, options *MilestoneQueryOptions) ([]Milestone, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/api/projects/%d/milestones", c.Url, id), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/projects/%d/milestones", c.Url, id), nil)
 
 	q := req.URL.Query()
 	if options.Name != "" {
@@ -154,7 +154,7 @@ func (c Client) GetMilestones(id int, options *MilestoneQueryOptions) ([]Milesto
 }
 
 func (c Client) GetTopContributors(id int, options *ContributorOptions) ([]Contribution, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/api/projects/%d/milestones", c.Url, id), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/projects/%d/milestones", c.Url, id), nil)
 
 	q := req.URL.Query()
 	if options.Type != "" {
@@ -192,7 +192,7 @@ func (c Client) UpdateProjectSettings(id int, options ProjectSettings) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	_, err = c.post(fmt.Sprintf("%s/api/projects/%d/setting", c.Url, id), payload)
+	_, err = c.post(fmt.Sprintf("%s/~api/projects/%d/setting", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -200,7 +200,7 @@ func (c Client) UpdateProjectSettings(id int, options ProjectSettings) error {
 }
 
 func (c Client) DeleteProject(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/api/projects/%d/", c.Url, id))
+	_, err := c.delete(fmt.Sprintf("%s/~api/projects/%d/", c.Url, id))
 	if err != nil {
 		return err
 	}
@@ -208,7 +208,7 @@ func (c Client) DeleteProject(id int) error {
 }
 
 func (c Client) GetCloneUrl(id int) (CloneUrl, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/projects/%d/clone-url", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/clone-url", c.Url, id))
 	if err != nil {
 		return CloneUrl{}, err
 	}

@@ -7,7 +7,7 @@ import (
 )
 
 func (c Client) GetIssueWatch(id int) (Watch, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issue-watches/%d", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issue-watches/%d", c.Url, id))
 	if err != nil {
 		return Watch{}, err
 	}
@@ -25,7 +25,7 @@ func (c Client) PostIssueWatch(options Watch) (int, error) {
 		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issue-watches", c.Url), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issue-watches", c.Url), payload)
 	if err != nil {
 		return 0, err
 	}
@@ -38,7 +38,7 @@ func (c Client) PostIssueWatch(options Watch) (int, error) {
 }
 
 func (c Client) DeleteIssueWatch(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/api/issue-watches/%d/", c.Url, id))
+	_, err := c.delete(fmt.Sprintf("%s/~api/issue-watches/%d/", c.Url, id))
 	if err != nil {
 		return err
 	}

@@ -7,7 +7,7 @@ import (
 )
 
 func (c Client) GetIssueComment(id int) (Comment, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issue-comments/%d", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issue-comments/%d", c.Url, id))
 	if err != nil {
 		return Comment{}, err
 	}
@@ -25,7 +25,7 @@ func (c Client) PostIssueComment(options Comment) (int, error) {
 		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issue-comments", c.Url), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issue-comments", c.Url), payload)
 	if err != nil {
 		return 0, err
 	}
@@ -38,7 +38,7 @@ func (c Client) PostIssueComment(options Comment) (int, error) {
 }
 
 func (c Client) DeleteIssueComment(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/api/issue-comments/%d/", c.Url, id))
+	_, err := c.delete(fmt.Sprintf("%s/~api/issue-comments/%d/", c.Url, id))
 	if err != nil {
 		return err
 	}

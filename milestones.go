@@ -7,7 +7,7 @@ import (
 )
 
 func (c Client) GetMilestone(id int) (Milestone, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/milestones/%d", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/milestones/%d", c.Url, id))
 	if err != nil {
 		return Milestone{}, err
 	}
@@ -25,7 +25,7 @@ func (c Client) PostMilestone(options Milestone) (int, error) {
 		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/milestones", c.Url), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/milestones", c.Url), payload)
 	if err != nil {
 		return 0, err
 	}
@@ -38,7 +38,7 @@ func (c Client) PostMilestone(options Milestone) (int, error) {
 }
 
 func (c Client) DeleteMilestone(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/api/milestones/%d/", c.Url, id))
+	_, err := c.delete(fmt.Sprintf("%s/~api/milestones/%d/", c.Url, id))
 	if err != nil {
 		return err
 	}

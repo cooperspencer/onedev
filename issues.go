@@ -8,7 +8,7 @@ import (
 )
 
 func (c Client) GetIssue(id int) (Issue, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d", c.Url, id))
 	if err != nil {
 		return Issue{}, err
 	}
@@ -21,7 +21,7 @@ func (c Client) GetIssue(id int) (Issue, error) {
 }
 
 func (c Client) GetIssueFields(id int) ([]IssueField, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d/fields", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/fields", c.Url, id))
 	if err != nil {
 		return []IssueField{}, err
 	}
@@ -34,7 +34,7 @@ func (c Client) GetIssueFields(id int) ([]IssueField, error) {
 }
 
 func (c Client) GetIssueChanges(id int) ([]IssueChange, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d/changes", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/changes", c.Url, id))
 	if err != nil {
 		return []IssueChange{}, err
 	}
@@ -47,7 +47,7 @@ func (c Client) GetIssueChanges(id int) ([]IssueChange, error) {
 }
 
 func (c Client) GetIssueComments(id int) ([]Comment, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d/comments", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/comments", c.Url, id))
 	if err != nil {
 		return []Comment{}, err
 	}
@@ -60,7 +60,7 @@ func (c Client) GetIssueComments(id int) ([]Comment, error) {
 }
 
 func (c Client) GetIssueVotes(id int) ([]Vote, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d/votes", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/votes", c.Url, id))
 	if err != nil {
 		return []Vote{}, err
 	}
@@ -73,7 +73,7 @@ func (c Client) GetIssueVotes(id int) ([]Vote, error) {
 }
 
 func (c Client) GetIssueWatches(id int) ([]Watch, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d/watches", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/watches", c.Url, id))
 	if err != nil {
 		return []Watch{}, err
 	}
@@ -86,7 +86,7 @@ func (c Client) GetIssueWatches(id int) ([]Watch, error) {
 }
 
 func (c Client) GetIssuePullRequests(id int) ([]PullRequest, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d/pull-requests", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/pull-requests", c.Url, id))
 	if err != nil {
 		return []PullRequest{}, err
 	}
@@ -99,7 +99,7 @@ func (c Client) GetIssuePullRequests(id int) ([]PullRequest, error) {
 }
 
 func (c Client) GetIssueCommits(id int) ([]string, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issues/%d/commits", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/commits", c.Url, id))
 	if err != nil {
 		return []string{}, err
 	}
@@ -112,7 +112,7 @@ func (c Client) GetIssueCommits(id int) ([]string, error) {
 }
 
 func (c Client) GetIssues(options *IssueQueryOptions) ([]Issue, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/api/issues", c.Url), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/issues", c.Url), nil)
 
 	q := req.URL.Query()
 	if options.Query != "" {
@@ -144,7 +144,7 @@ func (c Client) CreateIssue(options CreateIssueOptions) (int, error) {
 		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issues", c.Url), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issues", c.Url), payload)
 	if err != nil {
 		return 0, err
 	}
@@ -162,7 +162,7 @@ func (c Client) SetIssueTitle(id int, title string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issues/%d/title", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/title", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -178,7 +178,7 @@ func (c Client) SetIssueDescription(id int, title string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issues/%d/description", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/description", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -194,7 +194,7 @@ func (c Client) SetIssueMilestone(id, milestoneId int) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issues/%d/milestone", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/milestone", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -210,7 +210,7 @@ func (c Client) SetIssueFields(id int, fields map[string]string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issues/%d/fields", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/fields", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -226,7 +226,7 @@ func (c Client) SetStateTransition(id int, options StateTransitionOptions) error
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issues/%d/state-transitions", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/state-transitions", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -237,7 +237,7 @@ func (c Client) SetStateTransition(id int, options StateTransitionOptions) error
 }
 
 func (c Client) DeleteIssue(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/api/issues/%d/", c.Url, id))
+	_, err := c.delete(fmt.Sprintf("%s/~api/issues/%d/", c.Url, id))
 	if err != nil {
 		return err
 	}

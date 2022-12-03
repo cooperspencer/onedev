@@ -6,7 +6,7 @@ import (
 )
 
 func (c Client) GetDefaultBranch(id int) (string, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/repositories/%d/default-branch", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/repositories/%d/default-branch", c.Url, id))
 	if err != nil {
 		return "", err
 	}

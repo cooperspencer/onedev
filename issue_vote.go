@@ -7,7 +7,7 @@ import (
 )
 
 func (c Client) GetIssueVote(id int) (Vote, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/issue-votes/%d", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/issue-votes/%d", c.Url, id))
 	if err != nil {
 		return Vote{}, err
 	}
@@ -25,7 +25,7 @@ func (c Client) PostIssueVote(options Vote) (int, error) {
 		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/issue-votes", c.Url), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/issue-votes", c.Url), payload)
 	if err != nil {
 		return 0, err
 	}
@@ -38,7 +38,7 @@ func (c Client) PostIssueVote(options Vote) (int, error) {
 }
 
 func (c Client) DeleteIssueVote(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/api/issue-votes/%d/", c.Url, id))
+	_, err := c.delete(fmt.Sprintf("%s/~api/issue-votes/%d/", c.Url, id))
 	if err != nil {
 		return err
 	}

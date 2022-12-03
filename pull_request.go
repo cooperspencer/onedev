@@ -7,7 +7,7 @@ import (
 )
 
 func (c Client) GetPullRequest(id int) (PullRequest, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d", c.Url, id))
 	if err != nil {
 		return PullRequest{}, err
 	}
@@ -20,7 +20,7 @@ func (c Client) GetPullRequest(id int) (PullRequest, error) {
 }
 
 func (c Client) DeletePullRequest(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/api/pull-requests/%d", c.Url, id))
+	_, err := c.delete(fmt.Sprintf("%s/~api/pull-requests/%d", c.Url, id))
 	if err != nil {
 		return err
 	}
@@ -28,7 +28,7 @@ func (c Client) DeletePullRequest(id int) error {
 }
 
 func (c Client) GetPullRequests() ([]PullRequest, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests", c.Url))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests", c.Url))
 	if err != nil {
 		return []PullRequest{}, err
 	}
@@ -41,7 +41,7 @@ func (c Client) GetPullRequests() ([]PullRequest, error) {
 }
 
 func (c Client) GetPullRequestMergePreview(id int) (MergePreview, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/merge-preview", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/merge-preview", c.Url, id))
 	if err != nil {
 		return MergePreview{}, err
 	}
@@ -54,7 +54,7 @@ func (c Client) GetPullRequestMergePreview(id int) (MergePreview, error) {
 }
 
 func (c Client) GetPullRequestAssignments(id int) ([]Assignment, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/assignment", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/assignment", c.Url, id))
 	if err != nil {
 		return []Assignment{}, err
 	}
@@ -67,7 +67,7 @@ func (c Client) GetPullRequestAssignments(id int) ([]Assignment, error) {
 }
 
 func (c Client) GetPullRequestReviews(id int) ([]Review, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/reviews", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/reviews", c.Url, id))
 	if err != nil {
 		return []Review{}, err
 	}
@@ -80,7 +80,7 @@ func (c Client) GetPullRequestReviews(id int) ([]Review, error) {
 }
 
 func (c Client) GetPullRequestComments(id int) ([]Comment, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/comments", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/comments", c.Url, id))
 	if err != nil {
 		return []Comment{}, err
 	}
@@ -93,7 +93,7 @@ func (c Client) GetPullRequestComments(id int) ([]Comment, error) {
 }
 
 func (c Client) GetPullRequestWatches(id int) ([]Watch, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/watches", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/watches", c.Url, id))
 	if err != nil {
 		return []Watch{}, err
 	}
@@ -106,7 +106,7 @@ func (c Client) GetPullRequestWatches(id int) ([]Watch, error) {
 }
 
 func (c Client) GetPullRequestUpdates(id int) ([]Update, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/updates", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/updates", c.Url, id))
 	if err != nil {
 		return []Update{}, err
 	}
@@ -119,7 +119,7 @@ func (c Client) GetPullRequestUpdates(id int) ([]Update, error) {
 }
 
 func (c Client) GetPullRequestCurrentBuild(id int) ([]Build, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/current-builds", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/current-builds", c.Url, id))
 	if err != nil {
 		return []Build{}, err
 	}
@@ -132,7 +132,7 @@ func (c Client) GetPullRequestCurrentBuild(id int) ([]Build, error) {
 }
 
 func (c Client) GetPullRequestChanges(id int) ([]Change, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/changes", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/changes", c.Url, id))
 	if err != nil {
 		return []Change{}, err
 	}
@@ -145,7 +145,7 @@ func (c Client) GetPullRequestChanges(id int) ([]Change, error) {
 }
 
 func (c Client) GetPullRequestFixedIssueNumbers(id int) ([]int, error) {
-	body, err := c.get(fmt.Sprintf("%s/api/pull-requests/%d/fixed-issue-numbers", c.Url, id))
+	body, err := c.get(fmt.Sprintf("%s/~api/pull-requests/%d/fixed-issue-numbers", c.Url, id))
 	if err != nil {
 		return []int{}, err
 	}
@@ -163,7 +163,7 @@ func (c Client) CreatePullRequest(options PullRequestOptions) (int, error) {
 		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests", c.Url), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests", c.Url), payload)
 	if err != nil {
 		return 0, err
 	}
@@ -181,7 +181,7 @@ func (c Client) SetPullRequestTitle(id int, title string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/title", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/title", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -197,7 +197,7 @@ func (c Client) SetPullRequestDescription(id int, title string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/description", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/description", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -213,7 +213,7 @@ func (c Client) SetPullRequestMergeStrategy(id int, strategy string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/merge-strategy", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/merge-strategy", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -229,7 +229,7 @@ func (c Client) ReopenPullRequest(id int, reopen string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/reopen", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/reopen", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -245,7 +245,7 @@ func (c Client) DiscardPullRequest(id int, discard string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/discard", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/discard", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -261,7 +261,7 @@ func (c Client) MergePullRequest(id int, merge string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/merge", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/merge", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -277,7 +277,7 @@ func (c Client) DeletePullRequestSourceBranch(id int, branch string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/delete-source-branch", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/delete-source-branch", c.Url, id), payload)
 	if err != nil {
 		return err
 	}
@@ -293,7 +293,7 @@ func (c Client) RestorePullRequestSourceBranch(id int, branch string) error {
 		return err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/api/pull-requests/%d/restore-source-branch", c.Url, id), payload)
+	body, err := c.post(fmt.Sprintf("%s/~api/pull-requests/%d/restore-source-branch", c.Url, id), payload)
 	if err != nil {
 		return err
 	}

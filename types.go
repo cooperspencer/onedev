@@ -5,6 +5,7 @@ import "time"
 type Client struct {
 	Username string
 	Password string
+	Token    string
 	Url      string
 }
 

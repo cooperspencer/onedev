@@ -425,3 +425,39 @@ type Group struct {
 	CreateRootProjects bool        `json:"createRootProjects"`
 	Enforce2FA         bool        `json:"enforce2FA"`
 }
+
+type Artifact struct {
+	Type     string `json:"@type"`
+	Children []struct {
+		Type         string      `json:"@type"`
+		Children     interface{} `json:"children,omitempty"`
+		Path         string      `json:"path"`
+		LastModified int         `json:"lastModified"`
+		Length       int         `json:"length,omitempty"`
+		MediaType    interface{} `json:"mediaType,omitempty"`
+	} `json:"children"`
+	Path         string `json:"path"`
+	LastModified int    `json:"lastModified"`
+}
+
+type CommitQueryOptions struct {
+	Query string
+	Count int
+}
+
+type Commit struct {
+	CommitHash string `json:"commitHash"`
+	Author     struct {
+		Name         string `json:"name"`
+		EmailAddress string `json:"emailAddress"`
+		When         int64  `json:"when"`
+		TzOffset     int    `json:"tzOffset"`
+	} `json:"author"`
+	Committer struct {
+		Name         string `json:"name"`
+		EmailAddress string `json:"emailAddress"`
+		When         int64  `json:"when"`
+		TzOffset     int    `json:"tzOffset"`
+	} `json:"committer"`
+	CommitMessage string `json:"commitMessage"`
+}

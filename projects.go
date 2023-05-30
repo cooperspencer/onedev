@@ -34,6 +34,9 @@ func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
 
 	id := 0
 	err = json.NewDecoder(body).Decode(&id)
+	if err != nil {
+		err = getError(body)
+	}
 	body.Close()
 
 	return id, err

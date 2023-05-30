@@ -1,7 +1,6 @@
 package onedev
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -71,14 +70,4 @@ func (c Client) post(url string, payload io.Reader) (io.ReadCloser, error) {
 	}
 
 	return resp.Body, err
-}
-
-// getError return Error if json can't be marshalled
-func getError(body io.ReadCloser) error {
-	b, err := io.ReadAll(body)
-	if err != nil {
-		return err
-	}
-	body.Close()
-	return errors.New(string(b))
 }

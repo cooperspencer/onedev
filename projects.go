@@ -3,7 +3,9 @@ package onedev
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 )
@@ -31,13 +33,17 @@ func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	defer body.Close()
+	b, err := io.ReadAll(body)
+	if err != nil {
+		return 0, err
+	}
 
 	id := 0
-	err = json.NewDecoder(body).Decode(&id)
+	err = json.NewDecoder(bytes.NewReader(b)).Decode(&id)
 	if err != nil {
-		err = getError(body)
+		err = errors.New(string(b))
 	}
-	body.Close()
 
 	return id, err
 }

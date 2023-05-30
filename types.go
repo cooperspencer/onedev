@@ -10,24 +10,14 @@ type Client struct {
 }
 
 type Project struct {
-	ForkedFromID        int                 `json:"forkedFromId,omitempty"`
-	ParentID            int                 `json:"parentId,omitempty"`
-	Description         string              `json:"description,omitempty"`
-	DefaultRoleID       int                 `json:"defaultRoleId,omitempty"`
-	Name                string              `json:"name,omitempty"`
-	CodeManagement      bool                `json:"codeManagement,omitempty"`
-	IssueManagement     bool                `json:"issueManagement,omitempty"`
-	GitPackConfig       GitPackConfig       `json:"gitPackConfig,omitempty"`
-	CodeAnalysisSetting CodeAnalysisSetting `json:"codeAnalysisSetting,omitempty"`
-}
-type GitPackConfig struct {
-	WindowMemory  string `json:"windowMemory,omitempty"`
-	PackSizeLimit string `json:"packSizeLimit,omitempty"`
-	Threads       string `json:"threads,omitempty"`
-	Window        string `json:"window,omitempty"`
-}
-type CodeAnalysisSetting struct {
-	AnalysisFiles string `json:"analysisFiles,omitempty"`
+	ID                     int       `json:"id"`
+	ForkedFromID           int       `json:"forkedFromId"`
+	Name                   string    `json:"name"`
+	Description            string    `json:"description"`
+	CreateDate             time.Time `json:"createDate"`
+	UpdateDate             time.Time `json:"updateDate"`
+	DefaultRoleID          int       `json:"defaultRoleId"`
+	IssueManagementEnabled bool      `json:"issueManagementEnabled"`
 }
 
 type GroupAuthorization struct {
@@ -189,11 +179,26 @@ type ContributorOptions struct {
 }
 
 type CreateProjectOptions struct {
-	Name                   string `json:"name"`
-	ForkedFromID           int    `json:"forkedFromId,omitempty"`
-	Description            string `json:"description"`
-	DefaultRoleID          int    `json:"defaultRoleId"`
-	IssueManagementEnabled bool   `json:"issueManagementEnabled"`
+	ForkedFromID        int                 `json:"forkedFromId,omitempty"`
+	ParentID            int                 `json:"parentId,omitempty"`
+	Description         string              `json:"description,omitempty"`
+	DefaultRoleID       int                 `json:"defaultRoleId,omitempty"`
+	Name                string              `json:"name,omitempty"`
+	CodeManagement      bool                `json:"codeManagement,omitempty"`
+	IssueManagement     bool                `json:"issueManagement,omitempty"`
+	GitPackConfig       GitPackConfig       `json:"gitPackConfig,omitempty"`
+	CodeAnalysisSetting CodeAnalysisSetting `json:"codeAnalysisSetting,omitempty"`
+}
+
+type GitPackConfig struct {
+	WindowMemory  string `json:"windowMemory,omitempty"`
+	PackSizeLimit string `json:"packSizeLimit,omitempty"`
+	Threads       string `json:"threads,omitempty"`
+	Window        string `json:"window,omitempty"`
+}
+
+type CodeAnalysisSetting struct {
+	AnalysisFiles string `json:"analysisFiles,omitempty"`
 }
 
 type Issue struct {

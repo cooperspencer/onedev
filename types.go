@@ -10,14 +10,26 @@ type Client struct {
 }
 
 type Project struct {
-	ID                     int       `json:"id"`
-	ForkedFromID           int       `json:"forkedFromId"`
-	Name                   string    `json:"name"`
-	Description            string    `json:"description"`
-	CreateDate             time.Time `json:"createDate"`
-	UpdateDate             time.Time `json:"updateDate"`
-	DefaultRoleID          int       `json:"defaultRoleId"`
-	IssueManagementEnabled bool      `json:"issueManagementEnabled"`
+	ID                  int                 `json:"id,omitempty"`
+	ForkedFromID        int                 `json:"forkedFromId,omitempty"`
+	ParentID            int                 `json:"parentId,omitempty"`
+	Description         string              `json:"description,omitempty"`
+	CreateDate          time.Time           `json:"createDate,omitempty"`
+	DefaultRoleID       int                 `json:"defaultRoleId,omitempty"`
+	Name                string              `json:"name,omitempty"`
+	CodeManagement      bool                `json:"codeManagement,omitempty"`
+	IssueManagement     bool                `json:"issueManagement,omitempty"`
+	GitPackConfig       GitPackConfig       `json:"gitPackConfig,omitempty"`
+	CodeAnalysisSetting CodeAnalysisSetting `json:"codeAnalysisSetting,omitempty"`
+}
+type GitPackConfig struct {
+	WindowMemory  string `json:"windowMemory,omitempty"`
+	PackSizeLimit string `json:"packSizeLimit,omitempty"`
+	Threads       string `json:"threads,omitempty"`
+	Window        string `json:"window,omitempty"`
+}
+type CodeAnalysisSetting struct {
+	AnalysisFiles string `json:"analysisFiles,omitempty"`
 }
 
 type GroupAuthorization struct {
@@ -188,17 +200,6 @@ type CreateProjectOptions struct {
 	IssueManagement     bool                `json:"issueManagement,omitempty"`
 	GitPackConfig       GitPackConfig       `json:"gitPackConfig,omitempty"`
 	CodeAnalysisSetting CodeAnalysisSetting `json:"codeAnalysisSetting,omitempty"`
-}
-
-type GitPackConfig struct {
-	WindowMemory  string `json:"windowMemory,omitempty"`
-	PackSizeLimit string `json:"packSizeLimit,omitempty"`
-	Threads       string `json:"threads,omitempty"`
-	Window        string `json:"window,omitempty"`
-}
-
-type CodeAnalysisSetting struct {
-	AnalysisFiles string `json:"analysisFiles,omitempty"`
 }
 
 type Issue struct {
@@ -415,9 +416,16 @@ type PullRequestOptions struct {
 	AssigneeIds     []int  `json:"assigneeIds"`
 }
 
+type CreateUserOptions struct {
+	Name         string `json:"name,omitempty"`
+	Password     string `json:"password,omitempty"`
+	FullName     string `json:"fullName,omitempty"`
+	EmailAddress string `json:"emailAddress,omitempty"`
+}
+
 type CloneUrl struct {
-	HTTP string `json:"http"`
-	SSH  string `json:"ssh"`
+	HTTP string `json:"http,omitempty"`
+	SSH  string `json:"ssh,omitempty"`
 }
 
 type User struct {

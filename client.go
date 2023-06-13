@@ -1,9 +1,40 @@
 package onedev
 
-func NewClient(url, username, password string) *Client {
-	return &Client{Username: username, Password: password, Url: trimSuffix(url, "/")}
+import "fmt"
+
+type Token string
+
+func (t Token) ToString() string {
+	return fmt.Sprint(t)
 }
 
-func NewClientWithToken(url, token string) *Client {
-	return &Client{Token: token, Url: trimSuffix(url, "/")}
+type BasicAuth struct {
+	Username string
+	Password string
+}
+
+func NewClient(url string, params ...interface{}) *Client {
+	c := &Client{Url: trimSuffix(url, "/")}
+	for _, param := range params {
+		if _, ok := param.(Token); ok {
+			c.Token = param.(Token).ToString()
+		}
+		if _, ok := param.(BasicAuth); ok {
+			c.Username = param.(BasicAuth).Username
+			c.Password = param.(BasicAuth).Password
+		}
+	}
+
+	return c
+}
+
+func SetToken(token string) Token {
+	return Token(token)
+}
+
+func SetBasicAuth(username, password string) BasicAuth {
+	return BasicAuth{
+		Username: username,
+		Password: password,
+	}
 }

@@ -10,33 +10,33 @@ import (
 	"strconv"
 )
 
-func (c Client) GetProject(id int) (Project, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d", c.Url, id))
+func (c Client) GetProject(id int) (Project, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/projects/%d", c.Url, id))
 	if err != nil {
-		return Project{}, err
+		return Project{}, status, err
 	}
 
 	project := Project{}
 	err = json.NewDecoder(body).Decode(&project)
 	body.Close()
 
-	return project, err
+	return project, status, err
 }
 
-func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
+func (c Client) CreateProject(options CreateProjectOptions) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/projects", c.Url), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/projects", c.Url), payload)
 	if err != nil {
-		return 0, err
+		return 0, status, err
 	}
 	defer body.Close()
 	b, err := io.ReadAll(body)
 	if err != nil {
-		return 0, err
+		return 0, status, err
 	}
 
 	id := 0
@@ -45,10 +45,10 @@ func (c Client) CreateProject(options CreateProjectOptions) (int, error) {
 		err = errors.New(string(b))
 	}
 
-	return id, err
+	return id, status, err
 }
 
-func (c Client) GetProjects(options *ProjectQueryOptions) ([]Project, error) {
+func (c Client) GetProjects(options *ProjectQueryOptions) ([]Project, int, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/projects", c.Url), nil)
 
 	q := req.URL.Query()
@@ -63,71 +63,71 @@ func (c Client) GetProjects(options *ProjectQueryOptions) ([]Project, error) {
 
 	req.URL.RawQuery = q.Encode()
 
-	body, err := c.get(req.URL.String())
+	body, status, err := c.get(req.URL.String())
 	if err != nil {
-		return []Project{}, err
+		return []Project{}, status, err
 	}
 
 	projects := []Project{}
 	err = json.NewDecoder(body).Decode(&projects)
 	body.Close()
 
-	return projects, err
+	return projects, status, err
 }
 
-func (c Client) GetProjectForks(id int) ([]Project, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/forks", c.Url, id))
+func (c Client) GetProjectForks(id int) ([]Project, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/projects/%d/forks", c.Url, id))
 	if err != nil {
-		return []Project{}, err
+		return []Project{}, 0, err
 	}
 
 	forks := []Project{}
 	err = json.NewDecoder(body).Decode(&forks)
 	body.Close()
 
-	return forks, err
+	return forks, status, err
 }
 
-func (c Client) GetProjectSettings(id int) (ProjectSettings, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/setting", c.Url, id))
+func (c Client) GetProjectSettings(id int) (ProjectSettings, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/projects/%d/setting", c.Url, id))
 	if err != nil {
-		return ProjectSettings{}, err
+		return ProjectSettings{}, status, err
 	}
 
 	projectsettings := ProjectSettings{}
 	err = json.NewDecoder(body).Decode(&projectsettings)
 	body.Close()
 
-	return projectsettings, err
+	return projectsettings, status, err
 }
 
-func (c Client) GetGroupAuthorizations(id int) ([]GroupAuthorization, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/group-authorizations", c.Url, id))
+func (c Client) GetGroupAuthorizations(id int) ([]GroupAuthorization, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/projects/%d/group-authorizations", c.Url, id))
 	if err != nil {
-		return []GroupAuthorization{}, err
+		return []GroupAuthorization{}, status, err
 	}
 
 	groupauthorizations := []GroupAuthorization{}
 	err = json.NewDecoder(body).Decode(&groupauthorizations)
 	body.Close()
 
-	return groupauthorizations, err
+	return groupauthorizations, status, err
 }
 
-func (c Client) GetUserAuthorizations(id int) ([]UserAuthorization, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/user-authorizations", c.Url, id))
+func (c Client) GetUserAuthorizations(id int) ([]UserAuthorization, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/projects/%d/user-authorizations", c.Url, id))
 	if err != nil {
-		return []UserAuthorization{}, err
+		return []UserAuthorization{}, status, err
 	}
 
 	userauthorizations := []UserAuthorization{}
 	err = json.NewDecoder(body).Decode(&userauthorizations)
 	body.Close()
 
-	return userauthorizations, err
+	return userauthorizations, status, err
 }
 
-func (c Client) GetMilestones(id int, options *MilestoneQueryOptions) ([]Milestone, error) {
+func (c Client) GetMilestones(id int, options *MilestoneQueryOptions) ([]Milestone, int, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/projects/%d/milestones", c.Url, id), nil)
 
 	q := req.URL.Query()
@@ -150,19 +150,19 @@ func (c Client) GetMilestones(id int, options *MilestoneQueryOptions) ([]Milesto
 
 	req.URL.RawQuery = q.Encode()
 
-	body, err := c.get(req.URL.String())
+	body, status, err := c.get(req.URL.String())
 	if err != nil {
-		return []Milestone{}, err
+		return []Milestone{}, status, err
 	}
 
 	milestones := []Milestone{}
 	err = json.NewDecoder(body).Decode(&milestones)
 	body.Close()
 
-	return milestones, err
+	return milestones, status, err
 }
 
-func (c Client) GetTopContributors(id int, options *ContributorOptions) ([]Contribution, error) {
+func (c Client) GetTopContributors(id int, options *ContributorOptions) ([]Contribution, int, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/projects/%d/milestones", c.Url, id), nil)
 
 	q := req.URL.Query()
@@ -183,48 +183,48 @@ func (c Client) GetTopContributors(id int, options *ContributorOptions) ([]Contr
 
 	req.URL.RawQuery = q.Encode()
 
-	body, err := c.get(req.URL.String())
+	body, status, err := c.get(req.URL.String())
 	if err != nil {
-		return []Contribution{}, err
+		return []Contribution{}, status, err
 	}
 
 	contributions := []Contribution{}
 	err = json.NewDecoder(body).Decode(&contributions)
 	body.Close()
 
-	return contributions, err
+	return contributions, status, err
 }
 
-func (c Client) UpdateProjectSettings(id int, options ProjectSettings) error {
+func (c Client) UpdateProjectSettings(id int, options ProjectSettings) (int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	_, err = c.post(fmt.Sprintf("%s/~api/projects/%d/setting", c.Url, id), payload)
+	_, status, err := c.post(fmt.Sprintf("%s/~api/projects/%d/setting", c.Url, id), payload)
 	if err != nil {
-		return err
+		return status, err
 	}
-	return nil
+	return status, nil
 }
 
-func (c Client) DeleteProject(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/~api/projects/%d/", c.Url, id))
+func (c Client) DeleteProject(id int) (int, error) {
+	_, status, err := c.delete(fmt.Sprintf("%s/~api/projects/%d/", c.Url, id))
 	if err != nil {
-		return err
+		return status, err
 	}
-	return nil
+	return status, nil
 }
 
-func (c Client) GetCloneUrl(id int) (CloneUrl, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/projects/%d/clone-url", c.Url, id))
+func (c Client) GetCloneUrl(id int) (CloneUrl, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/projects/%d/clone-url", c.Url, id))
 	if err != nil {
-		return CloneUrl{}, err
+		return CloneUrl{}, status, err
 	}
 
 	cloneurls := CloneUrl{}
 	err = json.NewDecoder(body).Decode(&cloneurls)
 	body.Close()
 
-	return cloneurls, err
+	return cloneurls, status, err
 }

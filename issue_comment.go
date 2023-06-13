@@ -6,41 +6,41 @@ import (
 	"fmt"
 )
 
-func (c Client) GetIssueComment(id int) (Comment, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issue-comments/%d", c.Url, id))
+func (c Client) GetIssueComment(id int) (Comment, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issue-comments/%d", c.Url, id))
 	if err != nil {
-		return Comment{}, err
+		return Comment{}, status, err
 	}
 
 	comment := Comment{}
 	err = json.NewDecoder(body).Decode(&comment)
 	body.Close()
 
-	return comment, err
+	return comment, status, err
 }
 
-func (c Client) PostIssueComment(options Comment) (int, error) {
+func (c Client) PostIssueComment(options Comment) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/issue-comments", c.Url), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/issue-comments", c.Url), payload)
 	if err != nil {
-		return 0, err
+		return 0, status, err
 	}
 
 	id := 0
 	err = json.NewDecoder(body).Decode(&id)
 	body.Close()
 
-	return id, err
+	return id, status, err
 }
 
-func (c Client) DeleteIssueComment(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/~api/issue-comments/%d/", c.Url, id))
+func (c Client) DeleteIssueComment(id int) (int, error) {
+	_, status, err := c.delete(fmt.Sprintf("%s/~api/issue-comments/%d/", c.Url, id))
 	if err != nil {
-		return err
+		return status, err
 	}
-	return nil
+	return status, nil
 }

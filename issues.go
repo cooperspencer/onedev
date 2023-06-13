@@ -7,111 +7,111 @@ import (
 	"net/http"
 )
 
-func (c Client) GetIssue(id int) (Issue, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d", c.Url, id))
+func (c Client) GetIssue(id int) (Issue, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d", c.Url, id))
 	if err != nil {
-		return Issue{}, err
+		return Issue{}, status, err
 	}
 
 	issue := Issue{}
 	err = json.NewDecoder(body).Decode(&issue)
 	body.Close()
 
-	return issue, err
+	return issue, status, err
 }
 
-func (c Client) GetIssueFields(id int) ([]IssueField, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/fields", c.Url, id))
+func (c Client) GetIssueFields(id int) ([]IssueField, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d/fields", c.Url, id))
 	if err != nil {
-		return []IssueField{}, err
+		return []IssueField{}, status, err
 	}
 
 	issuefields := []IssueField{}
 	err = json.NewDecoder(body).Decode(&issuefields)
 	body.Close()
 
-	return issuefields, err
+	return issuefields, status, err
 }
 
-func (c Client) GetIssueChanges(id int) ([]IssueChange, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/changes", c.Url, id))
+func (c Client) GetIssueChanges(id int) ([]IssueChange, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d/changes", c.Url, id))
 	if err != nil {
-		return []IssueChange{}, err
+		return []IssueChange{}, status, err
 	}
 
 	issuechanges := []IssueChange{}
 	err = json.NewDecoder(body).Decode(&issuechanges)
 	body.Close()
 
-	return issuechanges, err
+	return issuechanges, status, err
 }
 
-func (c Client) GetIssueComments(id int) ([]Comment, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/comments", c.Url, id))
+func (c Client) GetIssueComments(id int) ([]Comment, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d/comments", c.Url, id))
 	if err != nil {
-		return []Comment{}, err
+		return []Comment{}, status, err
 	}
 
 	comments := []Comment{}
 	err = json.NewDecoder(body).Decode(&comments)
 	body.Close()
 
-	return comments, err
+	return comments, status, err
 }
 
-func (c Client) GetIssueVotes(id int) ([]Vote, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/votes", c.Url, id))
+func (c Client) GetIssueVotes(id int) ([]Vote, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d/votes", c.Url, id))
 	if err != nil {
-		return []Vote{}, err
+		return []Vote{}, status, err
 	}
 
 	votes := []Vote{}
 	err = json.NewDecoder(body).Decode(&votes)
 	body.Close()
 
-	return votes, err
+	return votes, status, err
 }
 
-func (c Client) GetIssueWatches(id int) ([]Watch, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/watches", c.Url, id))
+func (c Client) GetIssueWatches(id int) ([]Watch, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d/watches", c.Url, id))
 	if err != nil {
-		return []Watch{}, err
+		return []Watch{}, status, err
 	}
 
 	watches := []Watch{}
 	err = json.NewDecoder(body).Decode(&watches)
 	body.Close()
 
-	return watches, err
+	return watches, status, err
 }
 
-func (c Client) GetIssuePullRequests(id int) ([]PullRequest, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/pull-requests", c.Url, id))
+func (c Client) GetIssuePullRequests(id int) ([]PullRequest, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d/pull-requests", c.Url, id))
 	if err != nil {
-		return []PullRequest{}, err
+		return []PullRequest{}, status, err
 	}
 
 	pullrequests := []PullRequest{}
 	err = json.NewDecoder(body).Decode(&pullrequests)
 	body.Close()
 
-	return pullrequests, err
+	return pullrequests, status, err
 }
 
-func (c Client) GetIssueCommits(id int) ([]string, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/issues/%d/commits", c.Url, id))
+func (c Client) GetIssueCommits(id int) ([]string, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/issues/%d/commits", c.Url, id))
 	if err != nil {
-		return []string{}, err
+		return []string{}, status, err
 	}
 
 	commits := []string{}
 	err = json.NewDecoder(body).Decode(&commits)
 	body.Close()
 
-	return commits, err
+	return commits, status, err
 }
 
-func (c Client) GetIssues(options *IssueQueryOptions) ([]Issue, error) {
+func (c Client) GetIssues(options *IssueQueryOptions) ([]Issue, int, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/issues", c.Url), nil)
 
 	q := req.URL.Query()
@@ -126,120 +126,120 @@ func (c Client) GetIssues(options *IssueQueryOptions) ([]Issue, error) {
 
 	req.URL.RawQuery = q.Encode()
 
-	body, err := c.get(req.URL.String())
+	body, status, err := c.get(req.URL.String())
 	if err != nil {
-		return []Issue{}, err
+		return []Issue{}, status, err
 	}
 
 	issues := []Issue{}
 	err = json.NewDecoder(body).Decode(&issues)
 	body.Close()
 
-	return issues, err
+	return issues, status, err
 }
 
-func (c Client) CreateIssue(options CreateIssueOptions) (int, error) {
+func (c Client) CreateIssue(options CreateIssueOptions) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/issues", c.Url), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/issues", c.Url), payload)
 	if err != nil {
-		return 0, err
+		return 0, status, err
 	}
 
 	id := 0
 	err = json.NewDecoder(body).Decode(&id)
 	body.Close()
 
-	return id, err
+	return id, status, err
 }
 
-func (c Client) SetIssueTitle(id int, title string) error {
+func (c Client) SetIssueTitle(id int, title string) (int, error) {
 	payloadbytes, err := json.Marshal(title)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/title", c.Url, id), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/issues/%d/title", c.Url, id), payload)
 	if err != nil {
-		return err
+		return status, err
 	}
 
 	body.Close()
 
-	return nil
+	return status, nil
 }
 
-func (c Client) SetIssueDescription(id int, title string) error {
+func (c Client) SetIssueDescription(id int, title string) (int, error) {
 	payloadbytes, err := json.Marshal(title)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/description", c.Url, id), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/issues/%d/description", c.Url, id), payload)
 	if err != nil {
-		return err
+		return status, err
 	}
 
 	body.Close()
 
-	return nil
+	return status, nil
 }
 
-func (c Client) SetIssueMilestone(id, milestoneId int) error {
+func (c Client) SetIssueMilestone(id, milestoneId int) (int, error) {
 	payloadbytes, err := json.Marshal(milestoneId)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/milestone", c.Url, id), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/issues/%d/milestone", c.Url, id), payload)
 	if err != nil {
-		return err
+		return status, err
 	}
 
 	body.Close()
 
-	return nil
+	return status, nil
 }
 
-func (c Client) SetIssueFields(id int, fields map[string]string) error {
+func (c Client) SetIssueFields(id int, fields map[string]string) (int, error) {
 	payloadbytes, err := json.Marshal(fields)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/fields", c.Url, id), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/issues/%d/fields", c.Url, id), payload)
 	if err != nil {
-		return err
+		return status, err
 	}
 
 	body.Close()
 
-	return nil
+	return status, nil
 }
 
-func (c Client) SetStateTransition(id int, options StateTransitionOptions) error {
+func (c Client) SetStateTransition(id int, options StateTransitionOptions) (int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/issues/%d/state-transitions", c.Url, id), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/issues/%d/state-transitions", c.Url, id), payload)
 	if err != nil {
-		return err
+		return status, err
 	}
 
 	body.Close()
 
-	return nil
+	return status, nil
 }
 
-func (c Client) DeleteIssue(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/~api/issues/%d/", c.Url, id))
+func (c Client) DeleteIssue(id int) (int, error) {
+	_, status, err := c.delete(fmt.Sprintf("%s/~api/issues/%d/", c.Url, id))
 	if err != nil {
-		return err
+		return status, err
 	}
-	return nil
+	return status, nil
 }

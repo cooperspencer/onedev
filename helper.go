@@ -14,10 +14,10 @@ func trimSuffix(s, suffix string) string {
 	return s
 }
 
-func (c Client) get(url string) (io.ReadCloser, error) {
+func (c Client) get(url string) (io.ReadCloser, int, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	if len(c.Token) > 0 {
 		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", c.Token))
@@ -27,16 +27,16 @@ func (c Client) get(url string) (io.ReadCloser, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
-	return resp.Body, err
+	return resp.Body, resp.StatusCode, err
 }
 
-func (c Client) delete(url string) (io.ReadCloser, error) {
+func (c Client) delete(url string) (io.ReadCloser, int, error) {
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	if len(c.Token) > 0 {
 		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", c.Token))
@@ -46,16 +46,16 @@ func (c Client) delete(url string) (io.ReadCloser, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
-	return resp.Body, err
+	return resp.Body, resp.StatusCode, err
 }
 
-func (c Client) post(url string, payload io.Reader) (io.ReadCloser, error) {
+func (c Client) post(url string, payload io.Reader) (io.ReadCloser, int, error) {
 	req, err := http.NewRequest("POST", url, payload)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	if len(c.Token) > 0 {
 		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", c.Token))
@@ -66,8 +66,8 @@ func (c Client) post(url string, payload io.Reader) (io.ReadCloser, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
-	return resp.Body, err
+	return resp.Body, resp.StatusCode, err
 }

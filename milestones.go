@@ -6,41 +6,41 @@ import (
 	"fmt"
 )
 
-func (c Client) GetMilestone(id int) (Milestone, error) {
-	body, err := c.get(fmt.Sprintf("%s/~api/milestones/%d", c.Url, id))
+func (c Client) GetMilestone(id int) (Milestone, int, error) {
+	body, status, err := c.get(fmt.Sprintf("%s/~api/milestones/%d", c.Url, id))
 	if err != nil {
-		return Milestone{}, err
+		return Milestone{}, status, err
 	}
 
 	milestone := Milestone{}
 	err = json.NewDecoder(body).Decode(&milestone)
 	body.Close()
 
-	return milestone, err
+	return milestone, status, err
 }
 
-func (c Client) PostMilestone(options Milestone) (int, error) {
+func (c Client) PostMilestone(options Milestone) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 	payload := bytes.NewReader(payloadbytes)
-	body, err := c.post(fmt.Sprintf("%s/~api/milestones", c.Url), payload)
+	body, status, err := c.post(fmt.Sprintf("%s/~api/milestones", c.Url), payload)
 	if err != nil {
-		return 0, err
+		return 0, status, err
 	}
 
 	id := 0
 	err = json.NewDecoder(body).Decode(&id)
 	body.Close()
 
-	return id, err
+	return id, status, err
 }
 
-func (c Client) DeleteMilestone(id int) error {
-	_, err := c.delete(fmt.Sprintf("%s/~api/milestones/%d/", c.Url, id))
+func (c Client) DeleteMilestone(id int) (int, error) {
+	_, status, err := c.delete(fmt.Sprintf("%s/~api/milestones/%d/", c.Url, id))
 	if err != nil {
-		return err
+		return status, err
 	}
-	return nil
+	return status, nil
 }

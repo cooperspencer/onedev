@@ -168,6 +168,12 @@ type MilestoneQueryOptions struct {
 	Count     int
 }
 
+type BuildQueryOptions struct {
+	Query  string
+	Offset int
+	Count  int
+}
+
 type Contribution struct {
 	Author struct {
 		Name         string `json:"name"`
@@ -367,31 +373,6 @@ type Update struct {
 	Date                 time.Time `json:"date"`
 }
 
-type Build struct {
-	ID            int       `json:"id"`
-	NumberScopeID int       `json:"numberScopeId"`
-	ProjectID     int       `json:"projectId"`
-	SubmitterID   int       `json:"submitterId"`
-	SubmitterName string    `json:"submitterName"`
-	CancellerID   int       `json:"cancellerId"`
-	CancellerName string    `json:"cancellerName"`
-	JobName       string    `json:"jobName"`
-	JobWorkspace  string    `json:"jobWorkspace"`
-	RefName       string    `json:"refName"`
-	Version       string    `json:"version"`
-	Number        int       `json:"number"`
-	CommitHash    string    `json:"commitHash"`
-	Status        string    `json:"status"`
-	SubmitDate    time.Time `json:"submitDate"`
-	PendingDate   time.Time `json:"pendingDate"`
-	RunningDate   time.Time `json:"runningDate"`
-	FinishDate    time.Time `json:"finishDate"`
-	RetryDate     time.Time `json:"retryDate"`
-	SubmitReason  string    `json:"submitReason"`
-	ErrorMessage  string    `json:"errorMessage"`
-	RequestID     int       `json:"requestId"`
-}
-
 type Change struct {
 	ID        int       `json:"id"`
 	RequestID int       `json:"requestId"`
@@ -483,4 +464,31 @@ type Commit struct {
 		TzOffset     int    `json:"tzOffset"`
 	} `json:"committer"`
 	CommitMessage string `json:"commitMessage"`
+}
+
+type Build struct {
+	ID            int       `json:"id,omitempty"`
+	NumberScopeID int       `json:"numberScopeId,omitempty"`
+	ProjectID     int       `json:"projectId,omitempty"`
+	AgentID       int       `json:"agentId,omitempty"`
+	SubmitterID   int       `json:"submitterId,omitempty"`
+	CancellerID   int       `json:"cancellerId,omitempty"`
+	JobName       string    `json:"jobName,omitempty"`
+	JobWorkspace  string    `json:"jobWorkspace,omitempty"`
+	RefName       string    `json:"refName,omitempty"`
+	Version       string    `json:"version,omitempty"`
+	Description   string    `json:"description,omitempty"`
+	UUID          string    `json:"uuid,omitempty"`
+	Number        int       `json:"number,omitempty"`
+	CommitHash    string    `json:"commitHash,omitempty"`
+	Status        string    `json:"status,omitempty"`
+	Paused        bool      `json:"paused,omitempty"`
+	SubmitDate    time.Time `json:"submitDate,omitempty"`
+	PendingDate   time.Time `json:"pendingDate,omitempty"`
+	RunningDate   time.Time `json:"runningDate,omitempty"`
+	FinishDate    time.Time `json:"finishDate,omitempty"`
+	RetryDate     time.Time `json:"retryDate,omitempty"`
+	Pipeline      string    `json:"pipeline,omitempty"`
+	SubmitReason  string    `json:"submitReason,omitempty"`
+	RequestID     int       `json:"requestId,omitempty"`
 }

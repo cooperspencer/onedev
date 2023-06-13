@@ -17,8 +17,8 @@ type Project struct {
 	CreateDate          time.Time           `json:"createDate,omitempty"`
 	DefaultRoleID       int                 `json:"defaultRoleId,omitempty"`
 	Name                string              `json:"name,omitempty"`
-	CodeManagement      bool                `json:"codeManagement,omitempty"`
-	IssueManagement     bool                `json:"issueManagement,omitempty"`
+	CodeManagement      bool                `json:"codeManagement"`
+	IssueManagement     bool                `json:"issueManagement"`
 	GitPackConfig       GitPackConfig       `json:"gitPackConfig,omitempty"`
 	CodeAnalysisSetting CodeAnalysisSetting `json:"codeAnalysisSetting,omitempty"`
 }
@@ -202,8 +202,8 @@ type CreateProjectOptions struct {
 	Description         string              `json:"description,omitempty"`
 	DefaultRoleID       int                 `json:"defaultRoleId,omitempty"`
 	Name                string              `json:"name,omitempty"`
-	CodeManagement      bool                `json:"codeManagement,omitempty"`
-	IssueManagement     bool                `json:"issueManagement,omitempty"`
+	CodeManagement      bool                `json:"codeManagement"`
+	IssueManagement     bool                `json:"issueManagement"`
 	GitPackConfig       GitPackConfig       `json:"gitPackConfig,omitempty"`
 	CodeAnalysisSetting CodeAnalysisSetting `json:"codeAnalysisSetting,omitempty"`
 }
@@ -482,7 +482,7 @@ type Build struct {
 	Number        int       `json:"number,omitempty"`
 	CommitHash    string    `json:"commitHash,omitempty"`
 	Status        string    `json:"status,omitempty"`
-	Paused        bool      `json:"paused,omitempty"`
+	Paused        bool      `json:"paused"`
 	SubmitDate    time.Time `json:"submitDate,omitempty"`
 	PendingDate   time.Time `json:"pendingDate,omitempty"`
 	RunningDate   time.Time `json:"runningDate,omitempty"`

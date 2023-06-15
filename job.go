@@ -11,6 +11,9 @@ func (c Client) TriggerJob(options *TriggerJobQueryOptions) (int, int, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/trigger-job", c.Url), nil)
 
 	q := req.URL.Query()
+	if options.Job != "" {
+		q.Add("job", options.Job)
+	}
 	if options.Project != "" {
 		q.Add("project", options.Project)
 	}

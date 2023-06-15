@@ -3,6 +3,7 @@ package onedev
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 )
 
@@ -26,8 +27,9 @@ func (c Client) TriggerJob(options *TriggerJobQueryOptions) (int, int, error) {
 	req.URL.RawQuery = q.Encode()
 
 	body, status, err := c.get(req.URL.String())
-	if err != nil {
-		return 0, status, err
+	if err != nil || status != 200 {
+		b, _ := io.ReadAll(body)
+		return 0, status, fmt.Errorf(string(b))
 	}
 
 	id := 0

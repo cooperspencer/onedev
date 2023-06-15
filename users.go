@@ -34,7 +34,7 @@ func (c Client) GetUserMemberships(id int) ([]UserMemebership, int, error) {
 	return usermemberships, status, err
 }
 
-func (c Client) CreateUser(options CreateUserOptions) (int, int, error) {
+func (c Client) CreateUser(options *CreateUserOptions) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, 0, err

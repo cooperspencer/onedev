@@ -23,7 +23,7 @@ func (c Client) GetProject(id int) (Project, int, error) {
 	return project, status, err
 }
 
-func (c Client) CreateProject(options CreateProjectOptions) (int, int, error) {
+func (c Client) CreateProject(options *CreateProjectOptions) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, 0, err

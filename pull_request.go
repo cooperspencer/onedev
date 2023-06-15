@@ -157,7 +157,7 @@ func (c Client) GetPullRequestFixedIssueNumbers(id int) ([]int, int, error) {
 	return fixed, status, err
 }
 
-func (c Client) CreatePullRequest(options PullRequestOptions) (int, int, error) {
+func (c Client) CreatePullRequest(options *PullRequestOptions) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, 0, err

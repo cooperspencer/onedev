@@ -19,7 +19,7 @@ func (c Client) GetIssueVote(id int) (Vote, int, error) {
 	return vote, status, err
 }
 
-func (c Client) PostIssueVote(options Vote) (int, int, error) {
+func (c Client) PostIssueVote(options *Vote) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, 0, err

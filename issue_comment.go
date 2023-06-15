@@ -19,7 +19,7 @@ func (c Client) GetIssueComment(id int) (Comment, int, error) {
 	return comment, status, err
 }
 
-func (c Client) PostIssueComment(options Comment) (int, int, error) {
+func (c Client) PostIssueComment(options *Comment) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, 0, err

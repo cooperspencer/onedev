@@ -138,7 +138,7 @@ func (c Client) GetIssues(options *IssueQueryOptions) ([]Issue, int, error) {
 	return issues, status, err
 }
 
-func (c Client) CreateIssue(options CreateIssueOptions) (int, int, error) {
+func (c Client) CreateIssue(options *CreateIssueOptions) (int, int, error) {
 	payloadbytes, err := json.Marshal(options)
 	if err != nil {
 		return 0, 0, err

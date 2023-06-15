@@ -449,6 +449,14 @@ type CommitQueryOptions struct {
 	Count int
 }
 
+type TriggerJobQueryOptions struct {
+	Project     string
+	Branch      string
+	Tag         string
+	Job         string
+	AccessToken string
+}
+
 type Commit struct {
 	CommitHash string `json:"commitHash"`
 	Author     struct {

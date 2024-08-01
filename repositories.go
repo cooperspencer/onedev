@@ -30,7 +30,7 @@ func (c Client) GetDefaultBranch(id int) (string, int, error) {
 	return string(defaultbranch), status, err
 }
 
-func (c Client) GetCommits(id int, options *CommitQueryOptions) ([]string, int, error) {
+func (c Client) GetCommits(id int, options *CommitQueryOptions) ([]Commit, int, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/~api/repositories/%d/commits", c.Url, id), nil)
 
 	q := req.URL.Query()
@@ -49,10 +49,10 @@ func (c Client) GetCommits(id int, options *CommitQueryOptions) ([]string, int, 
 
 	body, status, err := c.get(req.URL.String())
 	if err != nil {
-		return []string{}, status, err
+		return nil, status, err
 	}
 
-	commits := []string{}
+	commits := []Commit{}
 	err = json.NewDecoder(body).Decode(&commits)
 	body.Close()
 

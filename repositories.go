@@ -7,6 +7,17 @@ import (
 	"net/http"
 )
 
+const (
+	Parents     = "PARENTS"
+	Author      = "AUTHOR"
+	Committer   = "COMMITTER"
+	CommitDate  = "COMMIT_DATE"
+	Subject     = "SUBJECT"
+	Body        = "BODY"
+	FileChanges = "FILE_CHANGES"
+	LineChanges = "LINE_CHANGES"
+)
+
 func (c Client) GetDefaultBranch(id int) (string, int, error) {
 	body, status, err := c.get(fmt.Sprintf("%s/~api/repositories/%d/default-branch", c.Url, id))
 	if err != nil {
@@ -30,6 +41,9 @@ func (c Client) GetCommits(id int, options *CommitQueryOptions) ([]string, int, 
 	q.Add("count", fmt.Sprintf("%d", options.Count))
 	if options.Query != "" {
 		q.Add("query", options.Query)
+	}
+	for _, field := range options.Fields {
+		q.Add("field", field)
 	}
 	req.URL.RawQuery = q.Encode()
 

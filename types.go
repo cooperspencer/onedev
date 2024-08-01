@@ -445,8 +445,9 @@ type Artifact struct {
 }
 
 type CommitQueryOptions struct {
-	Query string
-	Count int
+	Query  string
+	Count  int
+	Fields []string
 }
 
 type TriggerJobQueryOptions struct {
